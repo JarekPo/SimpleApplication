@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 # Check if there is instance running with the image name we are deploying
-pm2 stop all
 CURRENT_INSTANCE=$(docker ps -a -q --filter ancestor="$IMAGE_NAME" --format="{{.ID}}")
 
 # If an instance does exist stop the instance
 if [ "$CURRENT_INSTANCE" ]
 then
-	docker rm -f $(docker stop $CURRENT_INSTANCE)
+	docker rm $(docker stop $CURRENT_INSTANCE)
 fi
 
 # Pull down the instance from dockerhub
@@ -31,4 +30,3 @@ docker cp ./privatekey.pem node_app:/privatekey.pem
 docker cp ./server.crt node_app:/server.create
 # Start the node_app container
 docker start node_app
-
