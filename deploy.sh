@@ -5,7 +5,7 @@ CURRENT_INSTANCE=$(docker ps -a -q --filter ancestor="$IMAGE_NAME" --format="{{.
 # If an instance does exist stop the instance
 if [ "$CURRENT_INSTANCE" ]
 then
-	docker stop $(docker ps -a -q)
+	docker rm $(docker stop $CURRENT_INSTANCE)
 fi
 
 # Pull down the instance from dockerhub
